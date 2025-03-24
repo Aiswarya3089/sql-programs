@@ -1,0 +1,96 @@
+create database accounts;
+use accounts;
+
+
+create table Account(
+AcctName varchar(20) primary key,
+Password Varchar(20) not null,
+LastSignedOn datetime not null,
+SbscrbrName varchar(20) not null,
+SbscrbrAddress varchar(50) not null,
+SbscrbrEmail varchar(30)not null,
+SbscrbrPhone int not null,
+AcctCreatedOn date not null);
+
+select * 
+from account;
+
+Create table Characters(
+AcctName varchar(20),
+foreign key(AcctName)
+references Account(AcctName), 
+CharName varchar(20) primary key,
+Level int not null,
+ExpPoints int not null,
+Type varchar(20) not null,
+MaxHitPoints int not null,
+MaxMana varchar(10) not null,
+CurrHitPoints int not null,
+CurrMana varchar(20) not null);
+
+select *
+from characters;
+
+create table Has(
+AcctName varchar(20) primary key,
+CharName varchar(20),
+foreign key(CharName)
+references Characters(CharName),
+LastPlayed date not null,
+CreatedOn date not null);
+
+select *
+from has;
+
+create table Region(
+CharName varchar(20),
+foreign key(CharName)
+references Characters(CharName),
+RegionName varchar(20) primary key,
+Climate varchar(20) not null,
+Precipitation varchar(20) not null,
+Playersin int not null);
+
+create table Region1(
+RegionName varchar(20) primary key,
+Foliage varchar(20) not null);
+
+create table Creep (
+CreepName varchar(20) primary key,
+CharName varchar(20),
+foreign key(CharName)
+references Characters(CharName),
+HitPoints int not null,
+Mana varchar(10) not null,
+Attack varchar(10) not null);
+
+create table ItemInstantiation(
+CharName varchar(20),
+foreign key(CharName)
+references Characters(CharName),
+IDNum int primary key,
+Modifier varchar(10) not null);
+
+create table CreepInstantiation(
+IDNum int primary key,
+CreepName varchar(20),
+foreign key(CreepName)
+references Creep(CreepName),
+RegionName varchar(20),
+foreign key(RegionName)
+References Region(RegionName));
+
+create table Item(
+IDNum int,
+foreign key(IDNum)
+references ItemInstantiation(IDNum),
+ItemNAme varchar(20) primary key,
+ItemType varchar(20) not null,
+ItemDamage varchar(20) not null);
+
+ create table Istype(
+ IDNum int primary key,
+ ItemName varchar(20),
+ foreign key(ItemName)
+ references Item(ItemName),
+ WhenCreated date not null);
