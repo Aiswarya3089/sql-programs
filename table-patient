@@ -1,0 +1,104 @@
+create database hospital;
+use hospital;
+create table patient (
+P_ID int primary key,
+Name varchar(20) not null,
+DOB date not null,
+Mob_No int not null,
+Age int not null,
+gender Varchar(10));
+
+select *
+from patient; 
+
+create table Bills (
+B_ID int primary key,
+P_ID int,
+foreign key (P_ID)
+references patient(P_ID),
+Amount decimal not null);
+
+select *
+from bills;
+
+create table Testreport (
+P_ID int,
+R_ID int primary key,
+Result varchar(50) not null,
+Test_type varchar(50) not null,
+foreign key(P_ID)
+references patient(P_ID));
+
+select *
+from testreport;
+
+create table rooms(
+P_ID int,
+foreign key (P_ID)
+references Patient(P_ID),
+E_ID int,
+foreign key (E_ID)
+references Employee(E_ID),
+R_ID int primary key,
+Type varchar(10) not null,
+Capacity int not null,
+Availability varchar(10) not null);
+
+select *
+from rooms;
+
+create table Employee(
+E_ID int primary key,
+Name varchar(20) not null,
+Salary decimal not null,
+Sex varchar(10) not null,
+Mob_No int not null,
+state varchar(10) not null,
+city varchar(10) not null,
+pin_no int not null);
+
+select *
+from employee;
+
+create table doctor(
+P_ID int,
+foreign key(P_ID)
+references patient(P_ID),
+E_ID int primary key,
+Dept varchar(10) not null,
+Qualification varchar(10) not null);
+
+select *
+from doctor;
+
+create table Nurse(
+P_ID int,
+foreign key(P_ID)
+references patient(P_ID),
+E_ID int primary key,
+Qualification varchar(10) not null);
+
+select * 
+from nurse;
+
+
+create table Receptionist(
+P_ID int,
+foreign key(P_ID)
+references patient(P_ID),
+E_ID int primary key,
+Qualification varchar(10) not null);
+
+select *
+from receptionist;
+
+create table Records(
+P_ID int,
+foreign key(P_ID)
+references patient(P_ID),
+E_ID int primary key,
+Record_No int not null,
+App_no int not null);
+
+select *  
+from records;
