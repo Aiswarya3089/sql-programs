@@ -1,0 +1,68 @@
+create database employee;
+use employee;
+create table employee(
+Emp_no int primary key,
+Emp_name varchar(50) not null,
+Salary int not null);
+
+create table department(
+Emp_no int,
+foreign key (Emp_no)
+references employee(Emp_no),
+Dept_id int primary key,
+Dept_name  varchar(20) not null);
+
+create table works(
+Emp_no int ,
+foreign key (Emp_no)
+references employee(Emp_no),
+Dept_id int primary key,
+Since date not null);
+
+select *
+from employee;
+
+
+insert into employee values(123,'Aiswarya',500000),
+(124,'Chandhana',100000),
+(125,'Aparna',10000),
+(126,'Dishna',150000);
+
+insert into department values(123,678,'Ethical Hacker'),
+(124,657,'Developer'),
+(125,654,'Data Scientist'),
+(126,669,'Order Managment');
+
+insert into works values (123,678,'2024-12-08'),
+(124,657,'2024-11-05'),
+(125,654,'2024-10-28'),
+(126,669,'2023-03-08');
+
+
+delimiter //
+create trigger salary_updating
+before update
+on employee
+for each row
+begin
+if new.Salary < 50000 then
+set new.Salary=100000;
+end if ;
+end //
+
+select *
+from employee;
+
+select *
+from department;
+
+select *
+from works;
+
+update employee
+set salary=45000
+where Emp_no=125;
+
+select employee.Emp_no,Dept_id,Dept_name
+from employee,department
+where employee.Emp_no=department.Emp_no;
